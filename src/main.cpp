@@ -71,10 +71,11 @@ void setup()
     ;
 
   Serial.print("\nStarting MQTTClient_Basic on " + String(ARDUINO_BOARD));
+#ifdef ETHERNET_ENABLE
   Serial.println(" with " + String(SHIELD_TYPE));
   Serial.println(WEBSERVER_WT32_ETH01_VERSION);
 
-#ifdef ETHERNET_ENABLE
+
   /* --------------------------- initialize Ethernet -------------------------- */
   // To be called before ETH.begin()
   WT32_ETH01_onEvent();
@@ -112,7 +113,7 @@ void setup()
 unsigned long reconnectTimestamp = 0;         // Last reconnect attempt time
 unsigned long sensorUpdateTimestamp = 0;      // Last sensor update time
 const unsigned long reconnectInterval = 5000; // Reconnect every 5000 ms
-const unsigned long sensorInterval = 1000;    // Update sensor every 1000 ms
+const unsigned long sensorInterval = 10000;    // Update sensor every 1000 ms
 
 void loop()
 {
@@ -132,7 +133,7 @@ void loop()
   }
 
   /* ------------------------- Connect to MQTT Broker ------------------------- */
-
+#ifdef ETHERNET_ENABLE
   if (WT32_ETH01_isConnected())
   {
     if (!eth_mqttClient.connected())
@@ -153,9 +154,10 @@ void loop()
     }
   }
   else if (WL_CONNECTED == WiFi.status())
-  {
+#endif
+  //{
     /* --------------------- Try to reconnect to MQTT Broker -------------------- */
-    if (!wifi_mqttClient.connected())
+    if ( WL_CONNECTED == WiFi.status() && !wifi_mqttClient.connected())
     {
       if (currentMillis - reconnectTimestamp >= reconnectInterval)
       {
@@ -171,7 +173,7 @@ void loop()
     {
       // Nothing to do
     }
-  }
+  //}
 
   
   /* -------------------------- Update MQTT Entities -------------------------- */
@@ -185,7 +187,9 @@ void loop()
     }
 
     if (forceUpdate) {
-        deviceUpdate();
+        deviceUpdate(); 
+        delay(500);
+        deviceUpdate(); // clear status
     }
       
   }
@@ -244,7 +248,7 @@ void MQTT_callback(char *topic, byte *message, unsigned int length)
 
 void handleButtonState(int buttonIndex, unsigned long currentTime)
 {
-  bool currentButtonState = digitalRead(buttonPins[buttonIndex]); // Active LOW button
+  bool currentButtonState = !digitalRead(buttonPins[buttonIndex]); // Active LOW button
   //bool stateChanged = (currentButtonState != lastButtonState[buttonIndex]);
   bool stateChanged = (buttonStates[buttonIndex] != sm_lastBtnState[buttonIndex]);
 

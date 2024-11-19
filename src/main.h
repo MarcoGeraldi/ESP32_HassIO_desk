@@ -10,18 +10,21 @@
 #include "definitions.h"
 #include <iot_cli.h>
 #include <IoT_device.h>
+#ifdef ETHERNET_ENABLE
 #include <WebServer_WT32_ETH01.h>
+#endif
+
 /* -------------------------------------------------------------------------- */
 /*                                   Macros                                   */
 /* -------------------------------------------------------------------------- */
 #define DEBUG_ETHERNET_WEBSERVER_PORT Serial
 #define _ETHERNET_WEBSERVER_LOGLEVEL_ 3
 
-#define BTN1_PIN 5
-#define BTN2_PIN 6
-#define BTN3_PIN 7
-#define BTN4_PIN 10
-#define BTN5_PIN 20
+#define BTN1_PIN D1
+#define BTN2_PIN D2
+#define BTN3_PIN D3
+#define BTN4_PIN D4
+#define BTN5_PIN D5
 
 /* -------------------------------------------------------------------------- */
 /*                                Enumerations                                */

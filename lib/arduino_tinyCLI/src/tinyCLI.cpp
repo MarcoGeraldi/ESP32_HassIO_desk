@@ -1,5 +1,6 @@
 #include "tinyCLI.h"
 
+
 // Initialize the static instance pointer
 tinyCLI* tinyCLI::instance = nullptr;
 
@@ -21,41 +22,41 @@ void tinyCLI::processInput() {
 }
 
 void tinyCLI::printHelp(String params) {
-    // Define the total line length
-    const int lineLength = 100; // Set maximum line length to 100
-    const int padding = 20;
-
-    // Print the separator line
-    Serial.println("#" + String(std::string(lineLength - 2, '-').c_str()) + "#");
-    
-    // Print the command list header
-    String heading = "# Command" + String(std::string(padding - strlen("Command") - 1, ' ').c_str());
-    heading.concat("- Description");
-    heading.concat(String(std::string(lineLength - heading.length() - 1, ' ').c_str()));
-    heading.concat("#");
-
-    Serial.println(heading);
-    
-    // Print the separator line
-    Serial.println("#" + String(std::string(lineLength - 2, '-').c_str()) + "#");
-
-    // Print each command with manual formatting
-    for (int i = 0; i < instance->commandCount; i++) {
-        
-        String command = "# ";
-        command.concat(instance->commands[i].name);
-        command.concat(std::string(padding - command.length(), ' ').c_str());
-        command.concat(" - ");
-        command.concat(instance->commands[i].description); 
-        command.concat(String(std::string(lineLength - command.length() - 1, ' ').c_str()));
-        command.concat("#");
-
-        Serial.println(command);
-
-    }
-
-    // Print the bottom border
-    Serial.println("#" + String(std::string(lineLength - 2, '-').c_str()) + "#");
+//    // Define the total line length
+//    const int lineLength = 100; // Set maximum line length to 100
+//    const int padding = 20;
+//
+//    // Print the separator line
+//    Serial.println("#" + String(stdstring(lineLength - 2, '-').c_str()) + "#");
+//    
+//    // Print the command list header
+//    String heading = "# Command" + String(std::string(padding - strlen("Command") - 1, ' ').c_str());
+//    heading.concat("- Description");
+//    heading.concat(String(std::string(lineLength - heading.length() - 1, ' ').c_str()));
+//    heading.concat("#");
+//
+//    Serial.println(heading);
+//    
+//    // Print the separator line
+//    Serial.println("#" + String(std::string(lineLength - 2, '-').c_str()) + "#");
+//
+//    // Print each command with manual formatting
+//    for (int i = 0; i < instance->commandCount; i++) {
+//        
+//        String command = "# ";
+//        command.concat(instance->commands[i].name);
+//        command.concat(std::string(padding - command.length(), ' ').c_str());
+//        command.concat(" - ");
+//        command.concat(instance->commands[i].description); 
+//        command.concat(String(std::string(lineLength - command.length() - 1, ' ').c_str()));
+//        command.concat("#");
+//
+//        Serial.println(command);
+//
+//    }
+//
+//    // Print the bottom border
+//    Serial.println("#" + String(std::string(lineLength - 2, '-').c_str()) + "#");
 }
 
 
